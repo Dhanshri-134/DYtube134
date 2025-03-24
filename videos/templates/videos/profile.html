@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %} {{page_user.username}} {% endblock %}
+
+
+
+{% block content %}
+<div class="container">
+
+  {% csrf_token %}
+  <div class="mt-5 row">
+    <div class="col-sm-6 col-md-6 offset-sm-1">
+
+
+      {% if messages %}
+        {% for message in messages %}
+          <div {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+          {{message}}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        {% endfor %}
+      {% endif %}
+
+      {% if page_user.avatar %}
+        <a href="{% url 'profile' page_user.username %}">
+          <img src="{{page_user.avatar.url}}" alt="profile_pic" class="user-profile-pic rounded-circle float-left avatarpic">
+        </a>
+      {% else %}
+        <a href="{% url 'profile' page_user.username %}">
+          <img src="{% static 'img/user.png' %}" class="user-profile-pic mr-4 rounded-circle float-left"
+            alt="profile_pic" />
+        </a>
+      {% endif %}
+
+      {% comment %} </div> {% endcomment %}
+  
+      {% comment %} <div class="col-sm-6 col-md-6"> {% endcomment %}
+        
+      
+      <div>
+        <a href="{% url 'profile' page_user.username %}" class="user">
+          {{page_user.username}}
+        </a>
+      </div>
+      {% comment %} <div class="ml-4"> {% endcomment %}
+        {% if user.id == page_user.id %}
+        <a href="{% url 'accounts:edit_profile' %}" style="padding:8px 20px;" onmouseover="mouse_over()" onmouseout="mouse_out()"
+        role="button" id="hov" class="btn btn-outline-secondary btn-sm uploadbtn">Edit profile</a>
+        {% endif %}
+        {% if user.id == page_user.id %}
+        <button id="upload" type="button" class="float-right btn btn-outline-secondary uploadbtn">Upload video</button>
+        {% endif %}
+    
+    {% comment %} </div> {% endcomment %}
+      
+
+  </div>
+
+  <h2 class="mt-5 mb-3"> Videos </h2>
+
+  {% if not all_videos %}
+  {% if user.id == page_user.id %}
+  <h4 class="mt-5 text-center"> There are no videos currently, upload atleast 10 videos using the upload button above
+  </h4>
+  {% endif %}
+  {% endif %}
+
+  <div class=" row">
+    {% for video in all_videos %}
+    <div class="col-md-4 mb-3">
+      <div class="card videoCard">
+        <div class="card-body">
+          <a href="{% url 'videos:video' video.id %}">
+            <video id="vid" width="100%" height="200px;">
+              <source src="{{ video.video_file.url}}" type="video/mp4">
+            </video>
+          </a>
+        </div>
+        <div class="card-footer">
+          {{video.post}}
+        </div>
+      </div>
+    </div>
+    {% if forloop.counter|divisibleby:3 %}
+  </div>
+  <div class="row">{% endif %}
+    {% endfor %}
+  </div>
+
+</div>
+
+{% endblock %}
