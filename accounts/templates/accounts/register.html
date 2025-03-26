@@ -1,22 +1,22 @@
 {% extends 'base.html' %}
-
 {% block content %}
 
   <div class="container">
     <div class="row">
-      <div class="col-sm-6 offset-sm-3">
-        <p>Already have an account? <a href="{% url 'accounts:login' %}">Login Here!</a></p>
+      <div class="col-sm-6 offset-sm-3 card" style="background:linear-gradient(rgba(0,0,0,0),rgba(0,0,0,1));border-color:#555555;">
+        <h1 style="text-align:center;color:white;" class="mt-5">Registration Form</h1>
         <form action="{% url 'accounts:register' %}" method="post">
           {% csrf_token %}
           {% for field in form %}
-            <div class="form-group">
+            <div class="form-group" style="margin:20px;">
               {{ field.errors }}
               {{ field.label_tag }}
               {{ field }}
             </div>
           {% endfor %}
-          <input type="submit" value="submit" class="btn btn-secondary">
+          <input type="submit" value="submit" class="btn btn-secondary" style="margin-left:20px;">
         </form>
+        <p>Already have an account? <a href="{% url 'accounts:login' %}" class="linkRelate">Login Here!</a></p>
       </div>
     </div>
   </div>

@@ -4,7 +4,7 @@
 
 {% load humanize %}
 
-{% block title %}  {{video.post|truncatechars:42}} - Vidakali  {% endblock %}
+{% block title %}  {{video.post|truncatechars:20}} - DYtube  {% endblock %}
 
 
 
@@ -41,11 +41,12 @@
            </a>
           {% endif %}
          {% if video.user.username == user.username %}
-           <button id="edit" data-id="{{video.id}}" type="button" class="float-right btn btn-secondary">Edit</button>
-         {% endif %}
+          <button id="edit" data-id="{{video.id}}" type="button" class="btn-danger float-right btn btn-secondary">Edit</button>
+          <button id="delete_Video" data-id="{{video.id}}" type="button" class="float-right btn btn-secondary">Delete</button>
+          {% endif %}
          <div class="ml-5">        
            <div class="ml-4 my-1">
-             <a href="{% url 'profile' video.user.username %}" style="text-decoration:none; color:white;">
+             <a href="{% url 'profile' video.user.username %}" >
                >> {{video.user.username}}
              </a>
            </div>           

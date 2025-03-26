@@ -1,0 +1,27 @@
+{% load static %}
+<div class="modal-header">
+    <h5 class="modal-title" id="staticBackdropLabel"> Deletion Successful</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+ </div>
+ 
+ <div class="modal-body">
+           
+  <form action="" method="post" enctype='multipart/form-data'>
+      {% csrf_token %}
+      Successfully Deleted the Video!
+      {% for field in form %}
+      <div class="form-group">
+        {{ field.errors }}
+        {{ field.label_tag }}
+        {{ field }}
+      </div>
+        {% endfor %}   
+  </form>
+ 
+ </div>
+            
+ <div class="modal-footer">
+  <button type="button" id="go_to_home" class="btn btn-secondary" data-dismiss="modal" onclick="setTimeout(() => window.location.href='/', 1000)">Close</button>
+ </div>

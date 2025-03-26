@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import redirect, render, get_object_or_404
 from django.core.paginator import Paginator
 from django.template.loader import render_to_string
 from django.contrib.auth.decorators import login_required
@@ -104,3 +104,34 @@ def remove(request):
 
     data['partial_video_comments'] = render_to_string('videos/partial_video_comments.html', {'video': parent}, request=request)  # noqa: E501
     return JsonResponse(data)
+
+
+@login_required
+def delete_video(request, id):
+    data = {}
+    video = get_object_or_404(Video, pk=id)
+    if video.user == request.user:
+        video.delete()
+        data['success'] = True
+        data['message'] = 'Video deleted successfully.'
+    else:
+        data['success'] = False
+        data['message'] = 'You are not authorized to delete this video.'
+    data['data']=render_to_string('videos/delete_video_successful.html', request=request)
+    return JsonResponse(data)
+    # return redirect('home')
+    
+
+@login_required
+def delete_video_confirmation(request, id):
+    data={}
+    data['data']=render_to_string('videos/delete_video.html', {'video_id': id}, request=request)
+    return JsonResponse(data)
+
+
+def search_results(request):
+    query = request.GET.get('q', '')
+    results = Video.objects.filter(post__icontains=query) if query else []
+    return render(request, 'videos/search_results.html', {'results': results, 'query': query})
+    
+

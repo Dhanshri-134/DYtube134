@@ -46,10 +46,11 @@
                 </video> 
               </a>
             </div>
-            <div class="card-footer"> 
-              {{video.post|truncatechars:42}}  
+            <div class="card-header"> 
+              {{video.post|truncatechars:42}}  <br>
+                By {{user.username}}
             </div>
-            <div class="card-header">
+            <div class="card-footer">
               <small class="ml-1">{{video.date|naturaltime }}</small>
             </div>
           </div>

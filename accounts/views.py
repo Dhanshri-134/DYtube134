@@ -53,3 +53,13 @@ def edit_profile(request):
             return HttpResponseRedirect(reverse('profile', args=[str(request.user.username)]))  # noqa: E501
 
     return render(request, 'accounts/edit_profile.html', {'form': form})
+
+
+def notification(request):
+    logout(request)
+    return redirect('accounts:login')
+
+
+def subscription(request):
+    logout(request)
+    return redirect('accounts:login')
