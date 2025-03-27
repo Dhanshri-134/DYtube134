@@ -48,18 +48,8 @@ def edit_profile(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Your profile was successfully updated ',
-                             extra_tags='alert alert-success alert-dismissible fade show'  # noqa: E501
+                             extra_tags='alert alert-success alert-dismissible fade show'  
                             )
-            return HttpResponseRedirect(reverse('profile', args=[str(request.user.username)]))  # noqa: E501
+            return HttpResponseRedirect(reverse('profile', args=[str(request.user.username)]))  
 
     return render(request, 'accounts/edit_profile.html', {'form': form})
-
-
-def notification(request):
-    logout(request)
-    return redirect('accounts:login')
-
-
-def subscription(request):
-    logout(request)
-    return redirect('accounts:login')

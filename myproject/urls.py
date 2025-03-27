@@ -10,8 +10,13 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('videos/', include('videos.urls', namespace="videos")),
     path('search/', views.search_results, name='search_results'),
+    path('liked_Videos/', views.liked_videos, name='liked_videos'),
+    path('subscriptions/', views.subscription_videos, name='subscription-videos'),
+    path("notifications/", views.notifications, name="notifications"),
+    path("notifications/mark-read/", views.mark_notifications_read, name="mark_notifications_read"),
     path('<str:username>/', views.profile, name='profile'),
     path('accounts/', include('accounts.urls', namespace="accounts")),
+    
 ]
 
 if settings.DEBUG:

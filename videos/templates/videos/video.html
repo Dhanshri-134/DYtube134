@@ -26,8 +26,19 @@
           <div class="card-header">
             <small class="mr-1">uploaded : </small> <small class="ml-1">{{video.date|naturaltime }}</small>
           </div>
-         <div class="card-footer"> 
-              {{video.post}} 
+          <div class="card-footer"> 
+            {{video.post}} 
+            <button id="like-button" data-video-id="{{ video.id }}" class="like-btn btn">
+              <i id="like-icon" class="bi {% if request.user in video.like_set.all %}bi-hand-thumbs-up-fill{% else %}bi-hand-thumbs-up{% endif %}" style="font-size:17px; padding:0px !important; margin:0px !important;"></i> Like (<span id="like-count">{{ video.total_likes }}</span>)
+            </button>
+            <button id="subscribe-button" data-user-id="{{ video.user.id }}" class="btn ">
+              {% if request.user in user.subscribers.all %}
+                  Unsubscribe
+              {% else %}
+                  Subscribe
+              {% endif %}
+              <span id="subscriber-count">{{ user.subscribers.count }}</span>
+            </button>
          </div>
        </div>
        <div class="my-4 clearfix">
@@ -41,8 +52,8 @@
            </a>
           {% endif %}
          {% if video.user.username == user.username %}
-          <button id="edit" data-id="{{video.id}}" type="button" class="btn-danger float-right btn btn-secondary">Edit</button>
-          <button id="delete_Video" data-id="{{video.id}}" type="button" class="float-right btn btn-secondary">Delete</button>
+          <button id="edit" data-id="{{video.id}}" type="button" class=" float-right btn ">Edit</button>
+          <button id="delete_Video" data-id="{{video.id}}" type="button" class="float-right btn-warn btn ">Delete</button>
           {% endif %}
          <div class="ml-5">        
            <div class="ml-4 my-1">
@@ -84,4 +95,5 @@
    </div>
  </div> 
 </div>
+
 {% endblock %}

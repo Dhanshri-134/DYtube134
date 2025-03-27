@@ -1,3 +1,17 @@
+.btn-warn{
+  background-color: tomato !important;
+}
+.btn-warn:hover{
+  background-color: rgb(247, 0, 0) !important;
+  color:black !important;
+}
+.btn-secondary{
+  background-color: rgb(253, 106, 61) !important;
+}
+.btn-secondary:hover{
+  background-color: rgb(255, 60, 0) !important;
+  color:white !important;
+}
 .errorlist {
   color: red;
 }
@@ -56,6 +70,7 @@ li {
  background:linear-gradient(rgba(196, 196, 196, 0.384),rgba(0,0, 0, 0.9));
  color:#eeeeee;
  border-color: gray;
+ text-decoration: none;
 }
 .btn, button{
   color:rgb(247, 247, 247);
@@ -179,4 +194,29 @@ i{
   top:0;
   z-index: 1000;
   background-color: rgba(0, 0, 0, 0.5);
+}
+.alert {
+  position: relative;
+  padding: 15px;
+  border-radius: 5px;
+  background-color: #d4edda; /* Light green background */
+  color: #155724; /* Dark green text */
+  border: 1px solid #c3e6cb;
+  max-width: 400px;
+  font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.alert .close {
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  font-weight: bold;
+  color: #721c24; /* Red color */
+  cursor: pointer;
+  position: absolute;
+  top: -8px;
+  right: 10px;
 }

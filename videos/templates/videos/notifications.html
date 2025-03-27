@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4" style="background:linear-gradient(rgba(0, 0, 0, 0.5),rgba(0,0, 0, 0.5)); border-color:lightgray;color:white;">
+    <h2>Notifications</h2>
+    {% if notifications %}
+        <ul class="list-group">
+            {% for notification in notifications %}
+                <li class="list-group-item {% if not notification.is_read %}{% endif %}" style="background:linear-gradient(rgba(0, 0, 0, 0.38),rgba(0,0, 0, 0.9)); border-color:darkgray;color:white;">
+                    <strong>{{ notification.message }}</strong> <br>
+                    <small class="text-muted ">{{ notification.timestamp|timesince }} ago</small>
+                </li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'mark_notifications_read' %}" class="btn mt-3">Mark all as read</a>
+    {% else %}
+        <p>No notifications yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

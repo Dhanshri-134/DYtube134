@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %} DY-Tube Subscriptions {% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    
+    <!-- Vertical Navbar -->
+    <nav class="col-md-3 col-lg-2 d-md-block sidebar navbar-light">
+      <div class="position-sticky">
+        <h5 class="text-white mt-3 text-center">Subscribed Users</h5>
+        <ul class="nav flex-column">
+          {% for user in videos_by_users.keys %}
+            <li class="nav-item">
+              <a class="nav-link text-white" href="#" onclick="openCollapse('{{ user.id }}')">
+                {{ user.username }}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Subscription Videos -->
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 ">
+      <div class="accordion " id="subscriptionAccordion">
+        {% for user, videos in videos_by_users.items %}
+          <div class="card videoCard">
+            <div class="card-header" id="heading{{ user.id }}">
+              <h2 class="mb-0">
+                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{ user.id }}" aria-expanded="false" aria-controls="collapse{{ user.id }}">
+                  Videos by {{ user.username }} 
+                </button>
+              </h2>
+            </div>
+
+            <div id="collapse{{ user.id }}" class="collapse" aria-labelledby="heading{{ user.id }}" data-parent="#subscriptionAccordion">
+              <div class="card-body">
+                <div class="row">
+                  {% for video in videos %}
+                    <div class="col-md-4 mb-3">
+                      <div class="card videoCard" style="background-color:transparent; color: white; border-color:lightgray;">
+                        <div class="card-body">
+                          <a href="{% url 'videos:video' video.id %}">
+                            <video id="vid" width="100%" height="200px" controls> 
+                              <source src="{{ video.video_file.url }}" type="video/mp4">
+                            </video> 
+                          </a>
+                        </div>
+                        <div class="card-header"> 
+                          {{ video.post|truncatechars:42 }} <br>
+                          By {{ video.user.username }}
+                        </div>
+                        <div class="card-footer">
+                          <small class="ml-1">{{ video.date|naturaltime }}</small>
+                        </div>
+                      </div>   
+                    </div> 
+                    {% if forloop.counter|divisibleby:3 %}</div><div class="row">{% endif %}
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </main>
+  </div>
+</div>
+
+
+<script>
+  function openCollapse(userId) {
+    document.querySelectorAll('.collapse').forEach(el => el.classList.remove('show'));
+
+    let collapseElement = document.getElementById("collapse" + userId);
+    let headingElement = document.getElementById("heading" + userId);
+
+    if (collapseElement) {
+      collapseElement.classList.add('show');
+      headingElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+</script>
+
+{% endblock %}

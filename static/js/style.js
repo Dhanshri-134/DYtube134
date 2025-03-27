@@ -208,3 +208,43 @@ document.addEventListener("click", function (e) {
   }
 });
 
+document.getElementById("like-button").addEventListener("click", function () {
+  let videoId = this.getAttribute("data-video-id");
+
+  fetch(`/videos/like/${videoId}/`, {
+      method: "GET",
+      headers: { "X-Requested-With": "XMLHttpRequest" }
+  })
+  .then(response => response.json())
+  .then(data => {
+      document.getElementById("like-count").innerText = data.total_likes;
+      let icon = document.getElementById("like-icon");
+      if (data.liked) {
+        icon.classList.remove("bi-hand-thumbs-up");
+        icon.classList.add("bi-hand-thumbs-up-fill");
+    } else {
+        icon.classList.remove("bi-hand-thumbs-up-fill");
+        icon.classList.add("bi-hand-thumbs-up");
+    }
+    })
+  .catch(error => console.error("Error:", error));
+});
+
+
+document.getElementById("subscribe-button").addEventListener("click", function () {
+  let userId = this.getAttribute("data-user-id");
+
+  fetch(`/videos/subscribe/${userId}/`, {
+      method: "GET",
+      headers: { "X-Requested-With": "XMLHttpRequest" }
+  })
+  .then(response => response.json())
+  .then(data => {
+      if (data.is_subscribed) {
+          document.getElementById("subscribe-button").innerText = "Unsubscribe";
+      } else {
+          document.getElementById("subscribe-button").innerText = "Subscribe";
+      }
+      document.getElementById("subscriber-count").innerText = data.total_subscribers;
+  })
+});
