@@ -211,7 +211,7 @@ def subscription_videos(request):
 
     return render(request, "videos/Subscriptions.html", {
         'videos_by_users': videos_by_users, 
-        'notifications': notifications,'notifications': notifications})
+        'notifications': notifications})
 
 
 @login_required
